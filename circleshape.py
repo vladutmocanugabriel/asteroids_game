@@ -24,7 +24,6 @@ class CircleShape(pygame.sprite.Sprite):
     def collide(self, anotherShape):
         distance = self.radius + anotherShape.radius
         if pygame.math.Vector2.distance_to(self.position, anotherShape.position) <= distance:
-            print('merge ba')
             return True
         else:
             return False
