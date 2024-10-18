@@ -12,6 +12,11 @@ class Player(CircleShape):
         self.radius = PLAYER_RADIUS
         self.rotation = 0
         self.timer = 0
+        self.image = pygame.image.load('assets/ship.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (60, 60))  
+        self.image = pygame.transform.rotate(self.image, 210)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -21,8 +26,19 @@ class Player(CircleShape):
         c = self.position - forward * self.radius + right
         return [a, b, c]
     
+    
     def draw(self, screen):
-        return pygame.draw.polygon(screen, color='white', points= self.triangle(), width=2)
+        # Draw the hitbox as a white triangle
+        self.triangle()
+
+        # Rotate the image to match the player's direction
+        rotated_image = pygame.transform.rotate(self.image, -self.rotation)  # Negative rotation to match Pygame's coordinate system
+        new_rect = rotated_image.get_rect(center=self.position)  # Set the new rect to be centered on the player's position
+
+        # Draw the rotated image on top of the hitbox
+        screen.blit(rotated_image, new_rect)
+
+        
     
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
