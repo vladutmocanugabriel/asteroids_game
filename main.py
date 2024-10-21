@@ -74,15 +74,6 @@ def main():
         # Cap the framerate
         dt = FPS_clock.tick(60) / 1000
 
-        
-
-
-
-
-
-
-
-
 
 
 
